@@ -1,0 +1,37 @@
+<div *ngIf="info.role == 'ADMIN'">
+<div *ngIf="info.token; else loggedOut">
+    <h5 class="text-primary">Hello, Home!</h5>
+    <p>
+      <strong>Username: </strong> {{info.username}} <br/>
+      <strong>Role:</strong> {{info.role}} <br/>
+      <strong>Token:</strong> {{info.token}} <br/>
+    </p>
+    <button class="btn btn-secondary" (click)="logout()">Logout</button>
+  </div>
+  
+  <!-- <div *ngFor = "let IterOffers of offers?.getOffers()" >{{IterOffers.id}}</div> -->
+  <table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>First name</th>
+            <th>Second name</th>
+        </tr>
+    </thead>
+  
+    <tbody>
+        <tr *ngFor = "let IterUsers of users?.getUsers()" >
+            <td><span>{{IterUsers.id}}</span></td>
+            <td><span>{{IterUsers.username}}</span></td>
+            <td><span>{{IterUsers.firstName}}</span></td>
+            <td><span>{{IterUsers.lastName}}</span></td>
+            <td><button class="btn btn-secondary" (click)="delete(IterUsers.id)">Delete</button></td>
+        </tr>
+    </tbody>
+  
+  </table>
+    <ng-template #loggedOut>
+     Please login.
+    </ng-template>
+</div>

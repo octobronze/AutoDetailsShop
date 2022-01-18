@@ -1,0 +1,67 @@
+<div *ngIf="info.token; else loggedOut">
+  <h5 class="text-primary">Hello, Home!</h5>
+  <p>
+    <strong>Username: </strong> {{info.username}} <br/>
+    <strong>Role:</strong> {{info.role}} <br/>
+    <strong>Token:</strong> {{info.token}} <br/>
+  </p>
+  <button class="btn btn-secondary" (click)="logout()">Logout</button>
+</div>
+
+<div>
+<form name="filter" (ngSubmit)="doFilter()" #f="ngForm">
+  <div class="form-group">
+    <label>Filter </label>
+    <input type="text" [(ngModel)]="filter.keyWord" name="detailId" #detailId="ngModel" required>
+  </div>
+  <button type="submit">Find</button>
+</form>
+</div>
+<table>
+  <thead>
+      <tr>
+          <th>Id</th>
+          <th>Detail Id</th>
+          <th>Car brand</th>
+          <th>Car model</th>
+          <th>Price</th>
+      </tr>
+  </thead>
+
+  <tbody>
+      <tr *ngFor = "let IterOffers of offers?.getOffers(this.keyWord)" >
+          <td><span>{{IterOffers.id}}</span></td>
+          <td><span>{{IterOffers.detailId}}</span></td>
+          <td><span>{{IterOffers.carModel}}</span></td>
+          <td><span>{{IterOffers.carBrand}}</span></td>
+          <td><span>{{IterOffers.price}}</span></td>
+          <td><button class="btn btn-secondary" (click)="delete(IterOffers.id)" *ngIf="info.role == 'ADMIN'">Delete</button></td>
+      </tr>
+  </tbody>
+
+</table>
+<button (click) = "toggleEdit()" *ngIf="info.role == 'ADMIN'">Toggle edit form</button>
+  <div *ngIf="toggledEdit">
+    <form name="form" (ngSubmit)="add()" #f="ngForm">
+      <div class="form-group">
+        <label>Detail id </label>
+        <input type="text" [(ngModel)]="form.detailId" name="detailId" #detailId="ngModel" required>
+      </div>
+      <div class="form-group">
+        <label>Car brand </label>
+        <input type="text" [(ngModel)]="form.carBrand" name="carBrand" #carBrand="ngModel" required>
+      </div>
+      <div class="form-group">
+        <label>Car model </label>
+        <input type="text" [(ngModel)]="form.carModel" name="carModel" #carModel="ngModel" required>
+      </div>
+      <div class="form-group">
+        <label>Price </label>
+        <input type="text" [(ngModel)]="form.price" name="price" #price="ngModel" required>
+      </div>
+      <button type="submit">Add</button>
+    </form>
+  </div>
+  <ng-template #loggedOut>
+   Please login.
+  </ng-template>
