@@ -51,10 +51,4 @@ export class UsersStorageInfo{
     setUsers(users: UsersInfo[]){
         this.users = users;
     }
-
-    // checkAllIncludes(index: number, keyWord: string){
-    //     return this.users[index].firstName.includes(keyWord) ||
-    //             this.users[index].lastName.includes(keyWord) ||
-    //             this.users[index].username.includes(keyWord);
-    // }
 }
