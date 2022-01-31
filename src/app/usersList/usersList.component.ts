@@ -51,6 +51,7 @@ export class UsersListComponent implements OnInit {
         data => {
           console.log(id);
           this.users?.remove(id);
+          alert("User has been deleted");
           console.log(data);
         },
         error => {

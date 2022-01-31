@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit {
           console.log(error);
         }
       )
+      alert("Offer has been deleted");
     }
   }
 
@@ -75,6 +76,7 @@ export class HomeComponent implements OnInit {
     const res = await this.offersService.addOffer(this.form).toPromise();
     if(res != undefined){
       this.offers?.add(new OffersInfo(res.id, res.detailId, res.carBrand, res.carModel, res.price));
+      alert("Offer has been added");
     }
   }
   
@@ -103,6 +105,7 @@ export class HomeComponent implements OnInit {
       data =>{
         this.offers?.change(editOffer);
         console.log(data);
+        alert("Offer has been changed");
       },
       error =>{
         console.log(error);
