@@ -52,8 +52,7 @@ export class OffersStorageInfo{
     }
 
     isOk(offer: OffersInfo, keyWord: string){
-        return offer.detailId.toString().includes(keyWord) ||
-                offer.carBrand.includes(keyWord) ||
+        return offer.carBrand.includes(keyWord) ||
                 offer.carModel.includes(keyWord) ||
                 offer.price.toString().includes(keyWord);
     }
