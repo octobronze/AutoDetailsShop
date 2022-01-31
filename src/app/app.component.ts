@@ -14,4 +14,8 @@ export class AppComponent {
   isAdmin(){
     return this.tokenStorage.getRole() == 'ADMIN';
   }
+
+  isLogged(){
+    return this.tokenStorage.getRole() == null;
+  }
 }

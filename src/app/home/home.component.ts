@@ -16,8 +16,11 @@ export class HomeComponent implements OnInit {
   errorMessage = '';
   toggledEdit = false;
   form: any = {};
+  putForm: any = {};
   filter: any = {};
   keyWord: string = '';
+  editField: number = 0;
+  deleteVisability: number = 0;
   constructor(private token: TokenStorageService, private offersService: OffersService, private http: HttpClient) { }
 
   ngOnInit(): void {
@@ -49,30 +52,57 @@ export class HomeComponent implements OnInit {
   }
 
   delete(id: number){
-    console.log(id);
-    this.offersService.removeOffer(id).subscribe(
-      data => {
-        console.log(id);
-        this.offers?.remove(id);
-        console.log(data);
-      },
-      error => {
-        console.log(error);
-      }
-    )
+    const isOk = confirm("Are you sure?");
+    if(isOk){
+      this.offersService.removeOffer(id).subscribe(
+        data => {
+          console.log(id);
+          this.offers?.remove(id);
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
   }
 
   toggleEdit(){
     this.toggledEdit = !this.toggledEdit;
   }
 
-  add(){
-    this.offersService.addOffer(this.form).subscribe(
+  async add(){
+    const res = await this.offersService.addOffer(this.form).toPromise();
+    if(res != undefined){
+      this.offers?.add(new OffersInfo(res.id, res.detailId, res.carBrand, res.carModel, res.price));
+    }
+  }
+  
+  doFilter(){
+    this.keyWord = this.filter.keyWord;
+  }
+
+  setValues(id: number, detailId: number, carBrand: string, carModel: string, price: DoubleRange){
+    this.editField = id;
+    this.putForm.detailId = detailId;
+    this.putForm.carBrand = carBrand;
+    this.putForm.carModel = carModel;
+    this.putForm.price = price;
+  }
+
+  putEditField(id: number){
+    this.hideDeleteButton();
+    if(this.editField == 0){
+      return;
+    }
+    console.log(this.editField);
+    this.editField = 0;
+    const editOffer = new OffersInfo(id, this.putForm.detailId, this.putForm.carBrand, this.putForm.carModel, this.putForm.price);
+    console.log(editOffer);
+    this.offersService.setOffer(editOffer).subscribe(
       data =>{
-        console.log(this.form);
+        this.offers?.change(editOffer);
         console.log(data);
-        this.offers?.add(new OffersInfo(data.id, data.detailId, data.carBrand, data.carModel, data.price));
-        console.log(this.offers);
       },
       error =>{
         console.log(error);
@@ -80,8 +110,13 @@ export class HomeComponent implements OnInit {
       
     )
   }
-  
-  doFilter(){
-    this.keyWord = this.filter.keyWord;
+
+  showDeleteButton(value: number){
+    this.deleteVisability = value;
   }
+
+  hideDeleteButton(){
+    this.deleteVisability = 0;
+  }
+
 }

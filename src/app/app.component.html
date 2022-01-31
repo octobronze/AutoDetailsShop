@@ -1,9 +1,9 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-login" href="auth/login">Login</a>
+      <a class="navbar-login" href="auth/login" *ngIf="isLogged()">Login</a>
       <tr></tr>
-      <a class="navbar-register" href="auth/register">Register</a>
+      <a class="navbar-register" href="auth/register" *ngIf="isLogged()">Register</a>
       <tr></tr>
       <a class="navbar-usersList" href="/usersList" *ngIf="isAdmin()">Users list</a>
     </div>

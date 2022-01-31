@@ -29,8 +29,8 @@ export class OffersStorageInfo{
         return -1;
     }
 
-    change(id: number, offer: OffersInfo){
-        const index = this.findById(id);
+    change(offer: OffersInfo){
+        const index = this.findById(offer.id);
         if(index != -1){
             this.offers[index] = offer;
         }

@@ -45,17 +45,19 @@ export class UsersListComponent implements OnInit {
   }
 
   delete(id: number){
-    console.log(id);
-    this.usersService.removeUser(id).subscribe(
-      data => {
-        console.log(id);
-        this.users?.remove(id);
-        console.log(data);
-      },
-      error => {
-        console.log(error);
-      }
-    )
+    const isOk = confirm("Are you sure?");
+    if(isOk){
+      this.usersService.removeUser(id).subscribe(
+        data => {
+          console.log(id);
+          this.users?.remove(id);
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
   }
   
 }

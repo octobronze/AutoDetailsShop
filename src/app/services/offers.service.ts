@@ -28,8 +28,8 @@ export class OffersService{
       return this.http.delete<string>(this.offersUrl + id.toString(), httpOptions);
   }
 
-  setOffer(id: number, offersInfo: OffersInfo): Observable<OffersInfo>{
-    return this.http.post<OffersInfo>(this.offersUrl + id.toString(), offersInfo, httpOptions);
+  setOffer(offer: any): Observable<any>{
+    return this.http.put<any>(this.offersUrl, offer, httpOptions);
   }
 
   constructor(private http: HttpClient) { 
